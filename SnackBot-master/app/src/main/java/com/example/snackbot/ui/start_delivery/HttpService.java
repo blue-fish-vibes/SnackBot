@@ -18,9 +18,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HttpService extends Service {
-    private Context mContext;
-    // Binder given to clients
-    // Binder given to clients
     private final IBinder binder = new LocalBinder();
     private HttpServiceCallbacks httpServiceCallbacks;
 
@@ -33,6 +30,7 @@ public class HttpService extends Service {
             return HttpService.this;
         }
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
@@ -42,17 +40,11 @@ public class HttpService extends Service {
          httpServiceCallbacks = callbacks;
     }
 
-    public HttpService() {}
-
-    public HttpService(Context context) {
-        mContext = context;
-    }
-
     public void startDelivery() {
         Call<String> call = RetrofitClient.getInstance().getMyApi().startDelivery();
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 String result = response.toString();
                 if (httpServiceCallbacks != null) {
                     httpServiceCallbacks.onDeliveryStarted(result);
@@ -60,7 +52,7 @@ public class HttpService extends Service {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 String result = t.getLocalizedMessage();
                 if (httpServiceCallbacks != null) {
                     httpServiceCallbacks.onDeliveryStopped(result);
@@ -73,7 +65,7 @@ public class HttpService extends Service {
         Call<String> call = RetrofitClient.getInstance().getMyApi().cancelDelivery();
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 String result = response.toString();
                 if (httpServiceCallbacks != null) {
                     httpServiceCallbacks.onDeliveryStopped(result);
@@ -81,7 +73,7 @@ public class HttpService extends Service {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 String result = t.getLocalizedMessage();
                 if (httpServiceCallbacks != null) {
                     httpServiceCallbacks.onDeliveryStopped(result);

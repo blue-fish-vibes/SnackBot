@@ -28,8 +28,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,45 +38,22 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbar.setTitle("RoboSnacks");
         setSupportActionBar(binding.toolbar);
 
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        binding.fab.setOnClickListener(view -> Snackbar.make(view, "This feature has not yet been implemented", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "This feature has not yet been implemented", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        binding.buttonManageRobots.setOnClickListener(view -> Snackbar.make(view, "This feature has not yet been implemented", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
 
-        binding.buttonManageRobots.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "This feature has not yet been implemented", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        binding.buttonStartDelivery.setOnClickListener(view -> moveToStartDelivery());
 
-        binding.buttonStartDelivery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveToStartDelivery();
-            }
-        });
-
-        binding.buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
+        binding.buttonLogout.setOnClickListener(view -> logout());
 
         final TextView date = binding.textViewDate;
         date.setText(getDate());
 
         String username = "";
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null) {
             username = getIntent().getExtras().getString("username");
         }
@@ -89,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
             AppStatus.getInstance().setUsername(username);
         }
+
         final TextView tvUsername = binding.textViewUsername;
         String value = AppStatus.getInstance().getUsername() + "!";
         tvUsername.setText(value);
@@ -112,10 +88,4 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
 }

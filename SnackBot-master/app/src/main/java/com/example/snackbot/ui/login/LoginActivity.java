@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
-        //final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
             if (loginResult == null) {
                 return;
             }
-            //loadingProgressBar.setVisibility(View.GONE);
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
             }
@@ -78,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             setResult(Activity.RESULT_OK);
 
-            //Complete and destroy login activity once successful
             finish();
         });
 
@@ -113,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            //loadingProgressBar.setVisibility(View.VISIBLE);
             if (loginViewModel.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString()))
             {
@@ -121,13 +117,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //hardcoded strings for product demo
         usernameEditText.setText("robosnacks_qa@robosnacks.com");
         passwordEditText.setText("password");
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

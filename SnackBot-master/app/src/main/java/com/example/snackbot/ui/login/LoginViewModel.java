@@ -29,8 +29,13 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
+    /**
+     * Checks user authentication and returns result
+     * @param username username
+     * @param password password
+     * @return returns true if login was a success, otherwise returns false
+     */
     public boolean login(String username, String password) {
-        // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
@@ -43,6 +48,11 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Checks login form state for changes and performs input validation
+     * @param username username
+     * @param password password
+     */
     public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
@@ -53,7 +63,11 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder username validation check
+    /**
+     * Checks if username format is valid
+     * @param username username
+     * @return returns true if username is valid, otherwise returns false
+     */
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
@@ -65,7 +79,11 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
+    /**
+     * Placeholder user password validation
+     * @param password password
+     * @return returns true if password is valid, otherwise returns false
+     */
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
